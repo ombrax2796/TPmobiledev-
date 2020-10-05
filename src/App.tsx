@@ -1,8 +1,5 @@
 import React,{useRef, useState} from 'react';
-
-import {IonApp,IonHeader,IonToolbar,IonTitle,IonContent,IonItem,IonLabel,IonInput,IonGrid,IonRow,IonCol,IonButton,IonCard,IonCardContent,IonIcon} from '@ionic/react';
-import{calculatorOutline} from 'ionIcons/icons'
-
+import {IonApp,IonHeader,IonToolbar,IonTitle,IonContent,IonItem,IonLabel,IonInput,IonGrid,IonRow,IonCol,IonButton,IonCard,IonCardContent,IonIcon, IonSegment, IonSegmentButton} from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -28,7 +25,9 @@ const App: React.FC = () => {
   const rentInput =useRef<HTMLIonInputElement>(null)
   const [result, setResult] = useState<number>()
 
-const calculate = () =>{
+const change = (e: any) =>{
+  console.log(e);
+  
   const priceValue = priceInput.current?.value
   const rentValue = rentInput.current?.value
 
@@ -36,20 +35,20 @@ const calculate = () =>{
   const renta = +rentValue * 12 * 100 / +priceValue
 
   setResult(renta)
-}
+};
 
 const reset = () =>{
   priceInput.current!.value='';
   rentInput.current!.value='';
   setResult(undefined)
-}
+};
 
   return(
     <IonApp>
 
       <IonHeader>
-        <IonToolbar color="primary">
-          <IonTitle>
+        <IonToolbar mode="ios" color="primary">
+          <IonTitle >
             Investissement
           </IonTitle>
         </IonToolbar>
@@ -57,6 +56,15 @@ const reset = () =>{
         
       <IonContent>
 
+        <IonSegment onIonChange={ e => (change(e.detail.value))}>
+          <IonSegmentButton value="sol">
+            <IonLabel>Sol</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="plafond">
+            <IonLabel>Plafond</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
+        
         <IonItem>
           <IonLabel position="floating">
             price
@@ -74,11 +82,6 @@ const reset = () =>{
         <IonGrid>
           <IonRow>
         
-            <IonCol className='ion-text-left'>
-              <IonButton onClick={calculate}>
-                <IonIcon slot ="start" icon ="calculatorOutline"/>calculate
-              </IonButton>
-            </IonCol>
 
             <IonCol>
               {result &&
