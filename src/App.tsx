@@ -1,5 +1,5 @@
 import React,{useRef, useState} from 'react';
-import {IonApp,IonHeader,IonToolbar,IonTitle,IonContent,IonItem,IonLabel,IonInput,IonGrid,IonRow,IonCol,IonButton,IonCard,IonCardContent,IonIcon, IonSegment, IonSegmentButton} from '@ionic/react';
+import {IonApp,IonHeader,IonToolbar,IonTitle,IonContent,IonItem,IonLabel,IonInput,IonGrid,IonRow,IonCol,IonButton,IonCard,IonCardContent,IonIcon, IonSegment, IonSegmentButton, IonList, IonItemDivider, IonCheckbox} from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -25,12 +25,16 @@ const App: React.FC = () => {
   const maxInput =useRef<HTMLIonInputElement>(null)
   let  fixInput = ""
   const [result, setResult] = useState<number>()
+  const checkboxList = [
+    { val: '4K', isChecked: false},
+    { val: 'HD', isChecked: false},
+  ];
 
 const search = () =>{
   const min = minInput.current?.value
   const max = maxInput.current?.value
 
-  console.log(min, max, typeof(fixInput))
+  console.log(min, max, fixInput)
 };
 
 const change = (e: any) => {
@@ -78,13 +82,21 @@ const reset = () =>{
           </IonLabel>
           <IonInput ref={maxInput}></IonInput>
         </IonItem>
-
+        
+        <IonList>
+          <IonItemDivider>Choix de qualité d'affichage :</IonItemDivider>
+            {checkboxList.map(({ val, isChecked }, i) => (
+              <IonItem key={i}>
+                <IonLabel>{val}</IonLabel>
+                <IonCheckbox slot="end" value={val} checked={isChecked} color="dark" />
+              </IonItem>
+            ))}
+        </IonList>
         <IonGrid>
           <IonRow>
         
-          <IonCol className='ion-text-rigth'>
+          <IonCol>
               <IonButton onClick={search}>
-                <IonIcon slot ="start"/>
                 Recherche
               </IonButton>
             </IonCol>
