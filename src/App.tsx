@@ -53,7 +53,7 @@ const reset = () =>{
       <IonHeader>
         <IonToolbar mode="ios" color="primary">
           <IonTitle >
-            TP1
+            Vidéoprojecteur
           </IonTitle>
         </IonToolbar>
       </IonHeader>
