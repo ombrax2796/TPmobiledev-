@@ -21,25 +21,25 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 const App: React.FC = () => {
-  const priceInput =useRef<HTMLIonInputElement>(null)
-  const rentInput =useRef<HTMLIonInputElement>(null)
+  const minInput =useRef<HTMLIonInputElement>(null)
+  const maxInput =useRef<HTMLIonInputElement>(null)
+  let  fixInput = ""
   const [result, setResult] = useState<number>()
 
-const change = (e: any) =>{
-  console.log(e);
-  
-  const priceValue = priceInput.current?.value
-  const rentValue = rentInput.current?.value
+const search = () =>{
+  const min = minInput.current?.value
+  const max = maxInput.current?.value
 
-  if( !priceValue || !rentValue) return
-  const renta = +rentValue * 12 * 100 / +priceValue
-
-  setResult(renta)
+  console.log(min, max, typeof(fixInput))
 };
 
+const change = (e: any) => {
+  fixInput = e
+}
+
 const reset = () =>{
-  priceInput.current!.value='';
-  rentInput.current!.value='';
+  minInput.current!.value='';
+  maxInput.current!.value='';
   setResult(undefined)
 };
 
@@ -49,14 +49,14 @@ const reset = () =>{
       <IonHeader>
         <IonToolbar mode="ios" color="primary">
           <IonTitle >
-            Investissement
+            TP1
           </IonTitle>
         </IonToolbar>
       </IonHeader>
         
       <IonContent>
 
-        <IonSegment onIonChange={ e => (change(e.detail.value))}>
+        <IonSegment onIonChange={ e => {change(e.detail.value)}}>
           <IonSegmentButton value="sol">
             <IonLabel>Sol</IonLabel>
           </IonSegmentButton>
@@ -67,36 +67,36 @@ const reset = () =>{
         
         <IonItem>
           <IonLabel position="floating">
-            price
+            Prix minimum
           </IonLabel>
-          <IonInput ref={priceInput}></IonInput>
+          <IonInput ref={minInput}></IonInput>
         </IonItem>
 
         <IonItem>
           <IonLabel position="floating">
-            rent
+            Prix Maximum
           </IonLabel>
-          <IonInput ref={rentInput}></IonInput>
+          <IonInput ref={maxInput}></IonInput>
         </IonItem>
 
         <IonGrid>
           <IonRow>
         
-
+          <IonCol className='ion-text-rigth'>
+              <IonButton onClick={search}>
+                <IonIcon slot ="start"/>
+                Recherche
+              </IonButton>
+            </IonCol>
+            
             <IonCol>
-              {result &&
+              { result &&
               <IonCard>
                 <IonCardContent className='ion-text-center'>
                   {result}
                 </IonCardContent>
               </IonCard>
               }
-            </IonCol>
-
-            <IonCol className='ion-text-rigth'>
-              <IonButton onClick={reset}>
-                <IonIcon slot ="start" icon ="calculatorOutline"/>reset
-              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
